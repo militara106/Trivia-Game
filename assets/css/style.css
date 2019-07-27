@@ -19,14 +19,21 @@ h2 {
     font-weight: bold;
 }
 
-h3 {
+.timer {
     display: block;
-    font-size: 1.17em;
+    font-size: 1em;
     margin-top: 1em;
     margin-bottom: 1em;
     margin-left: 0;
     margin-right: 0;
     font-weight: bold;
+}
+
+body{
+    font-family: 'Abel', sans-serif;
+    background: black;
+    color: white;
+    text-shadow: .3rem .3rem black;
 }
 
 p {
@@ -40,25 +47,37 @@ p {
 .gridContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 10em 26em;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     justify-items: center;
     width: 60vw;
     height: auto;
     margin: 5vw auto auto auto;
-    background: red;
+    background-image: linear-gradient(-45deg, black, blue);
+    border: .2em ridge white;
+    border-radius: 5px; 
 }
 
 .title {
     grid-area: 1 / 1 / 2 / 5;
 }
 
-.timer {
-    grid-area: 2 / 1 / 3 / 5;
+.qContainer {
+    grid-area: 2 / 1 / 2 / 5;
+    text-align: center;
+    font-size: 1.5em;
 }
 
-.qContainer {
-    grid-area: 3 / 1 / 5 / 5;
-    text-align: center;
+#question{
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+#start{
+    margin-top: 4em ;
+    border: .2em ridge white;
+    border-radius: 5px;
+    text-shadow: none;
 }

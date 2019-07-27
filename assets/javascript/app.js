@@ -7,19 +7,24 @@ $(document).ready(function () {
     var countdown;
     var qnA = [
         ['Which Final Fantasy featured Cloud Strife?',
-         'FFIX', 'FFVIII', 'FFVII', 'FFVI', 3],
+            'FFIX', 'FFVIII', 'FFVII', 'FFVI', 3
+        ],
 
         ['What was the latest Final Fantasy game?',
-         'Final Fantasy Brave Exvius', 'Kingdom Hearts 3', 'FF Type-0', 'FFXV', 4],
+            'Final Fantasy Brave Exvius', 'Kingdom Hearts 3', 'FF Type-0', 'FFXV', 4
+        ],
 
         ['Who was the villain of Final Fantasy VI?',
-         'Sephiroth', 'Ultima', 'Kefka', 'Arden Izunia', 3],
+            'Sephiroth', 'Ultima', 'Kefka', 'Arden Izunia', 3
+        ],
 
         ['Which of these is not a Final Fantasy movie?',
-         'Kingsglaive', 'Advent Children', 'Spirits Within', 'Lightning Returns', 4],
+            'Kingsglaive', 'Advent Children', 'Spirits Within', 'Lightning Returns', 4
+        ],
 
         ['Chocobos first appeared in what game?',
-         'FFI', 'FFII', 'FFIII', 'FF Adventures', 2]
+            'FFI', 'FFII', 'FFIII', 'FF Adventures', 2
+        ]
     ];
 
     // Start the timer
@@ -37,9 +42,9 @@ $(document).ready(function () {
                     [qnA[questionNumber]
                         [qnA[questionNumber].length - 1]
                     ]);
-                    console.log("Times Up!");
-                    postQ();
-                    wrongCount++
+                console.log("Times Up!");
+                postQ();
+                wrongCount++
             }
         }, 1000);
     };
@@ -67,6 +72,8 @@ $(document).ready(function () {
 
     // Start question game
     function startGame() {
+        $("#start").css("border", "none");
+        $("#start").css("margin-top", "0");
         $("#start").empty();
         timerReset();
         timerStart();
@@ -89,11 +96,11 @@ $(document).ready(function () {
     // Displays what the answer was
     function answer() {
         $("#aContainer").empty();
-        $("#question").html("The answer was:<br>" + 
-        (qnA[questionNumber]
-            [qnA[questionNumber]
-                [qnA[questionNumber].length - 1]
-            ]));
+        $("#question").html("The answer was:<br>" +
+            (qnA[questionNumber]
+                [qnA[questionNumber]
+                    [qnA[questionNumber].length - 1]
+                ]));
         clearInterval(countdown);
     };
 
@@ -112,7 +119,10 @@ $(document).ready(function () {
         timerReset();
         $("#aContainer").empty();
         $("#question").html("You got " + rightCount + " correct and " + wrongCount + " wrong!")
-        $("#start").text("Start Over?");
+        $("#start").text("Start Over?").css("border", ".2em ridge white",
+            "border-radius", "5px");
+        rightCount = 0;
+        wrongCount = 0;
     };
 
     $("#start").click(function () {
@@ -125,12 +135,12 @@ $(document).ready(function () {
         if (check == true) {
             answer();
             rightCount++
-            $("#start").append("Correct!");
+            $("#question").prepend("<div style='font-size: 2em;'>Correct!<br></div>");
             postQ();
         } else {
             answer();
             wrongCount++;
-            $("#start").append("Wrong!");
+            $("#question").prepend("<div style='font-size: 2em;'>Wrong!<br></div>");
             postQ();
         }
     });
