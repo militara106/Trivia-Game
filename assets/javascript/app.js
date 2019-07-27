@@ -1,0 +1,132 @@
+$(document).ready(function () {
+    var timer = document.getElementById('timer');
+    var question = document.getElementById('question');
+    var secondsLeft;
+    var questionNumber = 0;
+    var rightCount = 0;
+    var wrongCount = 0;
+    var countdown;
+    var qnA = [
+        ['Which Final Fantasy featured Cloud Strife?',
+         'FFIX', 'FFVIII', 'FFVII', 'FFVI', 3],
+
+        ['q2',
+         'a1', 'a2', 'a3', 'a4', 2],
+
+        ['q3',
+         'a1', 'a2', 'a3', 'a4', 2],
+
+        ['q4',
+         'a1', 'a2', 'a3', 'a4', 2],
+
+        ['q5',
+         'a1', 'a2', 'a3', 'a4', 2]
+    ];
+
+    // Start the timer
+    function timerStart() {
+        countdown = setInterval(function () {
+            secondsLeft--;
+            timer.textContent = secondsLeft;
+            if (secondsLeft <= 0) {
+                clearInterval(countdown);
+                $("#aContainer").empty();
+                $("#question").html("Times Up!<br>" + "The answer was:<br>" +
+                    qnA[questionNumber]
+                    [qnA[questionNumber]
+                        [qnA[questionNumber].length - 1]
+                    ]);
+                    console.log("Times Up!");
+                    questionNumber++
+                    setTimeout(startGame, 3000);
+            }
+        }, 1000);
+    };
+
+    // Display question based on numberQuestion int
+    function nextQuestion(number) {
+        $("#start").empty();
+        $('#question').html('<p>' + qnA[number][0] + "</p>");
+        for (var i = 1; i < (qnA[number].length - 1); i++) {
+            var newQ = $("<li>");
+            $(newQ).attr("class", "choice");
+            $(newQ).attr("value", i);
+            var j = String.fromCharCode(65 + i - 1);
+            newQ.html("<p>" + j + ': ' + qnA[number][i] + "</p>");
+            $("#aContainer").append(newQ);
+            console.log("q added");
+        }
+    };
+
+    // Reset timer
+    function timerReset() {
+        secondsLeft = 15;
+        timer.textContent = secondsLeft;
+    };
+
+    // Start question game
+    function startGame() {
+        $("#start").empty();
+        timerReset();
+        timerStart();
+        if (questionNumber < qnA.length) {
+            nextQuestion(questionNumber);
+        }
+        console.log("Q: " + questionNumber + ", A: " + qnA[questionNumber][qnA[questionNumber].length - 1]);
+        console.log("start");
+    };
+
+    // Return true is user choice is correct, and vice versa
+    function checkAnswer(choice, answer) {
+        if (choice == answer) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    // Displays what the answer was
+    function answer(user) {
+        $("#aContainer").empty();
+        $("#question").html("The answer was:<br>" + user);
+        clearInterval(countdown);
+    };
+
+    // Displays whether user got answer correct or wrong
+    function postQ() {
+        questionNumber++
+        if (questionNumber == qnA.length) {
+            setTimeout(results, 3000);
+        } else {
+            setTimeout(startGame, 3000);
+        }
+    };
+
+    function results() {
+        questionNumber = 0;
+        $("#aContainer").empty();
+        $("#question").html("You got " + rightCount + " correct and " + wrongCount + " wrong!")
+        $("#start").text("Start Over?");
+    };
+
+    $("#start").click(function () {
+        startGame();
+    });
+
+    $("#aContainer").on("click", ".choice", function () {
+        console.log("clicked: " + this.value);
+        var check = checkAnswer(this.value, qnA[questionNumber][qnA[questionNumber].length - 1]);
+        if (check == true) {
+            answer(qnA[questionNumber][this.value]);
+            rightCount++
+            $("#start").append("Correct!");
+            postQ();
+        } else {
+            answer(qnA[questionNumber][this.value]);
+            wrongCount++;
+            $("#start").append("Wrong!");
+            postQ();
+        }
+    });
+
+});
